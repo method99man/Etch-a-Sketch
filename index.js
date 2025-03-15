@@ -7,7 +7,7 @@ function createGrid(amountOfCells) {
   for (x = 1; x <= amountOfCells; x++) {
     const row = document.createElement("div");
     row.classList.add(`row${x}`);
-    for (let i = 0; i < amountOfCells; i++) {
+    for (let i = 1; i <= amountOfCells; i++) {
       const square = document.createElement("div");
       square.classList.add("square");
       square.addEventListener("click", () => {
@@ -19,16 +19,23 @@ function createGrid(amountOfCells) {
   }
 }
 
-genBtn.addEventListener("click", () => {
-  userInput = parseInt(prompt("Number of squares per side for the new grid."));
-  console.log(userInput);
+function deleteGrid() {
+  container.querySelectorAll(".square").forEach((s) => s.remove());
+}
 
-  while (!Number.isInteger(userInput)) {
-    userInput = parseInt(
-      prompt("Number of squares per side for the new grid.")
+genBtn.addEventListener("click", () => {
+  userInput = Number(
+    prompt("Number of squares per side for the new grid. (Max 100)")
+  );
+
+  while (!Number.isInteger(userInput) || userInput >= 100) {
+    userInput = Number(
+      prompt("Number of squares per side for the new grid.(Max 100)")
     );
-    console.log(userInput);
   }
+
+  deleteGrid();
+  createGrid(userInput);
 });
 
-createGrid(userInput);
+// createGrid(32);
